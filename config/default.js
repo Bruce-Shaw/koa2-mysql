@@ -1,7 +1,7 @@
 const Client = require("mysql-pro");
 const client = new Client({     
     mysql: {
-      database: 'ssm',
+      database: 'test',
       user: 'root',
       password: 'password',
       port: '3306',

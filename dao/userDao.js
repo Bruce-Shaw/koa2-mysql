@@ -1,13 +1,59 @@
-const sql = require('../config/default')
+const sql = require('../config/default');
+const moment = require('moment');
+const tableName = 'users';
 
-module.exports.getUsersByPage = async ({start, end}) => {
-  var data = await sql.query(`SELECT * FROM users limit ${start}, ${end};`)
-    .then(function(result) {
-      return result;
+module.exports.getTotalCount = async () => {
+  const sqlStr = `SELECT COUNT(1) FROM ${tableName};`;
+  const result = await sql.query(sqlStr)
+    .then(function(data) {
+      return data;
     }, function(error){
-      return -1;
+      return error;
     });
-  return data;
+  return result[0]['COUNT(1)'];
+}
+
+module.exports.getUsersByPage = async ({pageNow, pageSize}) => {
+  const start = (pageNow-1)*pageSize;
+  const end = pageSize;
+  const sqlStr = `SELECT * FROM ${tableName} limit ${start}, ${end};`;
+  const result = await sql.query(sqlStr)
+    .then(function(data) {
+      return data;
+    }, function(error){
+      return error;
+    });
+  result.map(item => {
+    item.bornStr = moment(item.born).format('YYYY-MM-DD');
+  });
+  return result;
+}
+
+module.exports.getUserById = async ({id}) => {
+  const sqlStr = `SELECT * FROM ${tableName} WHERE id = ${id};`;
+  const [result] = await sql.query(sqlStr)
+    .then(function(data) {
+      return data;
+    }, function(error){
+      return error;
+    });
+  result.bornStr = moment(result.born).format('YYYY-MM-DD');
+  console.log(result.born)
+  return result;
+}
+
+module.exports.createUser = async ({name, gender, born, position, salary}) => {
+  const date = moment(born).format();
+  const sqlStr = `INSERT INTO ${tableName} (name,gender,position,salary) VALUES (${name},${gender},${position},${salary});`;
+  console.log("==========",`${date}`)
+  const result = await sql.query(sqlStr)
+    .then(function(data) {
+      return data;
+    }, function(error){
+      return error;
+    });
+    console.log(result)
+  return result;
 }
 
 

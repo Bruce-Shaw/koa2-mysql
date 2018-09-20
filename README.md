@@ -1,6 +1,6 @@
 # koa2-mysql
 
-开发工具为vsCode，数据库为mysql8.0.12，使用koa2+mysql-pro开发模式
+开发工具为vsCode，数据库为mysql8.0.12，使用koa2+mysql-pro开发模式，使用nodemon热启动
 
 ## 配置
 
@@ -14,3 +14,14 @@
 
 ### 规范
 * 所有依赖均使用截止到2018/09/19的最新版本
+
+## 命令
+
+```
+$ npm install 安装其他模块
+$ npm start 开发环境启动项目，已开启热更新，通过nodemone启动项目，注释了app.js最后一行
+$ npm start2 开发环境启动项目，已开启热更新，若需关闭修改webpack.dev.js中相应的注释处即可
+$ npm run build 构建项目
+
+```
+访问 http://localhost:3000
