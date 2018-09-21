@@ -1,4 +1,6 @@
-const { getUsersByPage, getTotalCount, getUserById, createUser } = require("../dao/userDao.js")
+const { 
+  getUsersByPage, getTotalCount, getUserById, createUser, deleteUserById, searchUsers 
+} = require("../dao/userDao.js")
 
 module.exports.getUsersByPage = async (value) => {
   const result = {
@@ -17,6 +19,22 @@ module.exports.createUser = async (value) => {
   const result = {
     'id': insertId,
     'result': insertId > 0,
+  }
+  return result;
+}
+
+module.exports.deleteUserById = async (value) => {
+  const result = {
+    'result': await deleteUserById(value),
+  }
+  return result;
+}
+
+module.exports.searchUsers = async (value) => {
+  const data = await searchUsers(value)
+  const result = {
+    'totalCount': data.length,
+    'data': data,
   }
   return result;
 }
