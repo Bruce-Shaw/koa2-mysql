@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 
 const { 
-  getUsersByPage, getUserById, createUser, deleteUserById, searchUsers 
+  getUsersByPage, getUserById, createUser, deleteUserById, searchUsers, updateUser
 } = require("../service/userService.js")
 
 router.prefix('/user')
@@ -32,6 +32,10 @@ router.get("/deleteUserById.json", async (ctx, next) => {
 
 router.get("/searchUsers.json", async (ctx, next) => {
   ctx.body = await searchUsers(ctx.request.query)
+})
+
+router.post("/updateUser.json", async (ctx, next) => {
+  ctx.body = await updateUser(ctx.request.body)
 })
 
 module.exports = router

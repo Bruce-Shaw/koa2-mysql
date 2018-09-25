@@ -37,7 +37,7 @@ module.exports.getUsersByPage = async ({
 module.exports.getUserById = async ({
   id
 }) => {
-  const sqlStr = `SELECT * FROM ${tableName} WHERE id = ?;`;
+  const sqlStr = `SELECT * FROM ${tableName} WHERE id=?;`;
   const [result] = await sql.query(sqlStr, [id])
     .then(function (data) {
       return data;
@@ -97,4 +97,26 @@ module.exports.searchUsers = async ({
       return error;
     });
   return result;
+}
+
+module.exports.updateUser = async ({
+  id,
+  name,
+  gender,
+  born,
+  position,
+  salary
+}) => {
+  const date = moment(born).format('YYYY-MM-DD');
+  console.log(name, gender, date, position, salary, id)
+  const sqlStr = `UPDATE users SET name=?,gender=?,born=?,position=?,salary=? WHERE id=?;`;
+  const {
+    protocol41
+  } = await sql.query(sqlStr, [name, gender, date, position, salary, id])
+    .then(function (data) {
+      return data;
+    }, function (error) {
+      return error;
+    });
+  return protocol41;
 }
